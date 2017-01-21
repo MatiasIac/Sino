@@ -1,4 +1,4 @@
-/*globals jsGFwk */
+/*globals jsGFwk,Utils*/
 'use strict';
 
 var Curve = {
@@ -15,9 +15,13 @@ var Curve = {
   yAxis: Math.floor(jsGFwk.settings.width / 4),
 
   freqIncrement: 0.05,
+  minFreq: 1,
+  maxFreq: 8,
+  minAmp: -2,
+  maxAmp: 2,
   ampIncrement: 0.05,
   offset: 2,
-  speed: 0.01,
+  speed: 0.05,
   waveSpeed: 0.01,
   init: function () {
 
@@ -34,36 +38,36 @@ var Curve = {
   },
   handleInput: function(delta) {
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.A]) {
-      this.setFrequency(this.freq + this.freqIncrement);
+      this.setFrequency(jsGFwk.Utils.clamp(this.freq + this.freqIncrement, this.minFreq, this.maxFreq));
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.D]) {
-      this.setFrequency(this.freq - this.freqIncrement);
+      this.setFrequency(jsGFwk.Utils.clamp(this.freq - this.freqIncrement, this.minFreq, this.maxFreq));
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.W]) {
-      this.amp += this.ampIncrement;
+      this.amp = jsGFwk.Utils.clamp(this.amp + this.ampIncrement, this.minAmp, this.maxAmp);
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.S]) {
-      this.amp -= this.ampIncrement;
+      this.amp = jsGFwk.Utils.clamp(this.amp - this.ampIncrement, this.minAmp, this.maxAmp);
     }
 
-    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.M]) {
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.L]) {
       this.phase -= this.speed * this.freq;
       this.offset += this.speed;
     }
 
-    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.N]) {
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.J]) {
       this.phase += this.speed * this.freq;
       this.offset -= this.speed;
     }
 
-    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.J]) {
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.K]) {
       this.offset -= this.speed + this.waveSpeed;
     }
 
-    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.K]) {
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.I]) {
       this.offset += this.speed - this.waveSpeed;
     }
   },
