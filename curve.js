@@ -38,11 +38,11 @@ var Curve = {
   },
   handleInput: function(delta) {
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.A]) {
-      this.setFrequency(jsGFwk.Utils.clamp(this.freq + this.freqIncrement, this.minFreq, this.maxFreq));
+      this.setFrequency(jsGFwk.Utils.clamp(this.freq + this.freqIncrement * this.freq, this.minFreq, this.maxFreq));
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.D]) {
-      this.setFrequency(jsGFwk.Utils.clamp(this.freq - this.freqIncrement, this.minFreq, this.maxFreq));
+      this.setFrequency(jsGFwk.Utils.clamp(this.freq - this.freqIncrement * this.freq, this.minFreq, this.maxFreq));
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.W]) {
