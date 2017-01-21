@@ -47,11 +47,11 @@ var Curve = {
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.N]) {
-      this.t += this.freqIncrement;
+      this.offset += this.freqIncrement;
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.M]) {
-      this.t -= this.freqIncrement;
+      this.offset -= this.freqIncrement;
     }
   },
 
