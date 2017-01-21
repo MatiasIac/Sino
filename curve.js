@@ -17,7 +17,7 @@ var Curve = {
   freqIncrement: 0.05,
   minFreq: 1,
   maxFreq: 8,
-  minAmp: -2,
+  minAmp: -0.01,
   maxAmp: 2,
   ampIncrement: 0.05,
   offset: 2,
