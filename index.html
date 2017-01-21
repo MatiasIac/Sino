@@ -7,12 +7,17 @@
         <script language="Javascript" src="framework/jsGFwkFonts.js"></script>
         <script language="Javascript" src="framework/jsGFwkIO.js"></script>
         <script language="Javascript" src="framework/jsGFwkCollisions.js"></script>
+        <script language="Javascript" src="framework/jsGFwkContainer.js"></script>
         <script language="Javascript" src="framework/jsGFwkGamepad.js"></script>
         <script language="Javascript" src="framework/jsGFwkRM.js"></script>
 	    <script language="Javascript" src="framework/jsGFwkSprites.js"></script>
         <script language="Javascript" src="framework/jsGFwkWebStorage.js"></script>
+        <script language="Javascript" src="framework/jsGFwkScenes.js"></script>
+        <script language="Javascript" src="framework/jsGFwkWebStorage.js"></script>
+        <script language="Javascript" src="framework/jsGFwkGamepad.js"></script>
 
         <script language="Javascript" src="curve.js"></script>
+        <script language="Javascript" src="enemy.js"></script>
         <script language="Javascript">
 
             jsGFwk.settings.canvas = "canvas";
@@ -26,27 +31,46 @@
             jsGFwk.include("ResourceManager");
     		jsGFwk.include("Sprites");
             jsGFwk.include("Fonts");
+            jsGFwk.include("Storage");
+            jsGFwk.include("Scenes");
 
-            //jsGFwk.Fonts.createFont({ name: 'zxBold', source: 'zxBold.ttf' });
+            jsGFwk.Fonts.createFont({ name: 'zxBold', source: 'zxBold.ttf' });
 
-            //jsGFwk.ResourceManager.addGraphic({ name: "goal", source: "island.png" });
-            //jsGFwk.ResourceManager.addGraphic({ name: "swimers", source: "swiming.png" });
+            var globalObjects = { };
+            var splash = new Image();
 
-		    jsGFwk.ResourceManager.onResourcesLoadedCompleted = function() {
-                //jsGFwk.Sprites.createSprite({id: "island",
-                //    graphic: jsGFwk.ResourceManager.graphics.goal.image,
-                //    top: 0, left: 0, width: 64, height: 48});
-
-                //jsGFwk.Sprites.createSpriteCollection("swimer", jsGFwk.ResourceManager.graphics.swimers.image,
-                //    [{left: 0, top: 84, width: 33, height: 23},
-                //    {left: 33, top: 84, width: 33, height: 23},
-                //    {left: 66, top: 84, width: 33, height: 23},
-                //    {left: 99, top: 84, width: 33, height: 23}]);
-                //jsGFwk.Sprites.swimer.loop(true);
-
+            splash.onload = function () {
+                jsGFwk.start();
             };
-            jsGFwk.createObject(Curve);
-            jsGFwk.start();
+            splash.src = "images/intro.png";
+
+            jsGFwk.ResourceManager.addGraphic({ name: "intro", source: "images/intro.png" });
+
+            jsGFwk.createObject({
+                id: "progress",
+                visible: true,
+                barWidth: 0,
+                init: function() {
+                    jsGFwk.ResourceManager.onResourcesLoadedCompleted = function() {
+
+                        globalObjects.enemiesContainer = jsGFwk.Container.createContainer('enemies', Enemy, true);
+
+                        jsGFwk.Scenes.create({name: "game",  
+                            gameObjects: [globalObjects.enemiesContainer, Curve] });
+                            
+                        jsGFwk.Scenes.scenes.game.enable();
+                        jsGFwk._gameObjects.progress.destroy();
+                    };
+                },
+                update: function(delta) {
+                },
+                draw: function (context) {
+                    context.drawImage(splash, 10, 10);
+                    context.fillStyle = "white";
+                    context.font = "11pt times";
+                    context.fillText("Loading...", 250, 220);
+                }
+            });
         </script>
     </body>
 </html>
