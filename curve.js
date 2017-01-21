@@ -13,9 +13,12 @@ var Curve = {
   width: jsGFwk.settings.width,
   xAxis: Math.floor(jsGFwk.settings.height / 2),
   yAxis: Math.floor(jsGFwk.settings.width / 4),
-  freqIncrement: 0.1,
-  ampIncrement: 0.1,
+
+  freqIncrement: 0.05,
+  ampIncrement: 0.05,
   offset: 2,
+  speed: 0.01,
+  waveSpeed: 0.01,
   init: function () {
 
   },
@@ -24,7 +27,7 @@ var Curve = {
     //   this.freqIncrement = -this.freqIncrement;
     // }
     //this.setFrequency(this.freq + this.freqIncrement);
-    this.t = (this.t + delta * 1);
+    this.t = (this.t + this.waveSpeed);
 
     this.handleInput(delta);
 
@@ -46,12 +49,22 @@ var Curve = {
       this.amp -= this.ampIncrement;
     }
 
-    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.N]) {
-      this.offset += this.freqIncrement;
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.M]) {
+      this.phase -= this.speed * this.freq;
+      this.offset += this.speed;
     }
 
-    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.M]) {
-      this.offset -= this.freqIncrement;
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.N]) {
+      this.phase += this.speed * this.freq;
+      this.offset -= this.speed;
+    }
+
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.J]) {
+      this.offset -= this.speed + this.waveSpeed;
+    }
+
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.K]) {
+      this.offset += this.speed - this.waveSpeed;
     }
   },
 
@@ -68,12 +81,12 @@ var Curve = {
 
 
     ctx.beginPath();
-    ctx.moveTo(x * this.unit + this.yAxis, this.unit * y + this.xAxis);
+    ctx.moveTo(x * this.unit, this.unit * y + this.xAxis);
     // Loop to draw segments
 
     for (x = 0; x <= this.width; x += this.step) {
       y = this.getHeight(x, this.t, this.freq, this.phase, this.amp);
-      ctx.lineTo(x * this.unit + this.yAxis, this.unit * y + this.xAxis);
+      ctx.lineTo(x * this.unit, this.unit * y + this.xAxis);
     }
     ctx.stroke();
 
@@ -91,7 +104,7 @@ var Curve = {
     ctx.beginPath();
     //ctx.moveTo(x, y);
 
-    ctx.arc(x * this.unit + this.yAxis, this.unit * y + this.xAxis, 10, 0, 2*Math.PI, false);
+    ctx.arc(x * this.unit, this.unit * y + this.xAxis, 10, 0, 2*Math.PI, false);
     ctx.stroke();
   },
   getHeight: function (x, t, freq, phase, amp) {

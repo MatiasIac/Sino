@@ -15,9 +15,10 @@
         <script language="Javascript" src="framework/jsGFwkScenes.js"></script>
         <script language="Javascript" src="framework/jsGFwkWebStorage.js"></script>
         <script language="Javascript" src="framework/jsGFwkGamepad.js"></script>
-
+        <script language="Javascript" src="framework/jsGFwkTimers.js"></script>
         <script language="Javascript" src="curve.js"></script>
         <script language="Javascript" src="enemy.js"></script>
+        <script language="Javascript" src="enemyController.js"></script>
         <script language="Javascript">
 
             jsGFwk.settings.canvas = "canvas";
@@ -55,9 +56,9 @@
 
                         globalObjects.enemiesContainer = jsGFwk.Container.createContainer('enemies', Enemy, true);
 
-                        jsGFwk.Scenes.create({name: "game",  
-                            gameObjects: [globalObjects.enemiesContainer, Curve] });
-                            
+                        jsGFwk.Scenes.create({name: "game",
+                            gameObjects: [globalObjects.enemiesContainer, Curve, EnemyController] });
+
                         jsGFwk.Scenes.scenes.game.enable();
                         jsGFwk._gameObjects.progress.destroy();
                     };
