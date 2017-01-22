@@ -13,5 +13,12 @@ var Foreground = {
         ctx.fillText("Level: " + LevelController.gameStatus.level, 10, 60);
 
         ctx.drawImage(jsGFwk.ResourceManager.graphics.foreground.image, 0, 0);
+    },
+    postRender: function postRender(ctx) {
+        globalObjects.fx.glTexture.loadContentsOf(jsGFwk.FastAnimation._canvas);
+        globalObjects.fx.glCanvas.draw(globalObjects.fx.glTexture)
+            .bulgePinch(jsGFwk.settings.width / 2, jsGFwk.settings.height / 2, jsGFwk.settings.width * 0.75, 0.12)
+            .vignette(0.25, 0.74)
+            .update();
     }
 };
