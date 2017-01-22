@@ -6,6 +6,8 @@
         return {
           onPlayerTouch: function () {
 
+            greenHit.play();
+
             for(var i = 0; i < 25; i++) {
                 globalObjects.particleContainer.cloneObject({ 
                   x: this.position.x, 
@@ -24,6 +26,8 @@
       case MapBuilder.constants.BADDIE:
         return {
           onPlayerTouch: function () {
+            
+            redHit.play();
 
             for(var i = 0; i < 25; i++) {
                 globalObjects.particleContainer.cloneObject({ 
@@ -43,6 +47,8 @@
       case MapBuilder.constants.SPECIAL:
         return {
           onPlayerTouch: function () {
+
+            blueHit.play();
 
             for(var i = 0; i < 25; i++) {
                 globalObjects.particleContainer.cloneObject({ 

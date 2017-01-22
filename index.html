@@ -18,6 +18,7 @@
         <script language="Javascript" src="framework/jsGFwkGamepad.js"></script>
         <script language="Javascript" src="framework/jsGFwkUtils.js"></script>
         <script language="Javascript" src="framework/jsGFwkTimers.js"></script>
+        <script language="Javascript" src="framework/jsGFwkJukebox.js"></script>
         <script language="Javascript" src="framework/alarm.js"></script>
         <script language="Javascript" src="glfx.js"></script>
         <script language="Javascript" src="curve.js"></script>
@@ -54,6 +55,9 @@
                     glTexture: null
                 }
             };
+            var greenHit = {};
+            var blueHit = {};
+            var redHit = {};
             var splash = new Image();
 
             splash.onload = function () {
@@ -73,6 +77,42 @@
             jsGFwk.ResourceManager.addGraphic({	name: "blueball", source: "images/blueball.png" });
             jsGFwk.ResourceManager.addGraphic({	name: "redball", source: "images/redball.png" });
             jsGFwk.ResourceManager.addGraphic({	name: "greenball", source: "images/greenball.png" });
+
+            var sound = {};
+                sound[jsGFwk.ResourceManager.sounds.format.mp3] = { source: "sounds/die.mp3" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/die.ogg" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/die.wav" };
+            jsGFwk.ResourceManager.addSound({ name: "die", sources: sound});
+
+            var sound = {};
+                sound[jsGFwk.ResourceManager.sounds.format.mp3] = { source: "sounds/die2.mp3" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/die2.ogg" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/die2.wav" };
+            jsGFwk.ResourceManager.addSound({ name: "die2", sources: sound});
+
+            var sound = {};
+                sound[jsGFwk.ResourceManager.sounds.format.mp3] = { source: "sounds/health.mp3" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/health.ogg" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/health.wav" };
+            jsGFwk.ResourceManager.addSound({ name: "health", sources: sound});
+
+            var sound = {};
+                sound[jsGFwk.ResourceManager.sounds.format.mp3] = { source: "sounds/hurt.mp3" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/hurt.ogg" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/hurt.wav" };
+            jsGFwk.ResourceManager.addSound({ name: "hurt", sources: sound});
+
+            var sound = {};
+                sound[jsGFwk.ResourceManager.sounds.format.mp3] = { source: "sounds/points.mp3" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/points.ogg" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/points.wav" };
+            jsGFwk.ResourceManager.addSound({ name: "points", sources: sound});
+
+            var sound = {};
+                sound[jsGFwk.ResourceManager.sounds.format.mp3] = { source: "sounds/sino.mp3" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/sino.ogg" };
+                sound[jsGFwk.ResourceManager.sounds.format.ogg] = { source: "sounds/sino.wav" };
+            jsGFwk.ResourceManager.addSound({ name: "music", sources: sound});
 
             jsGFwk.createObject({
                 id: "progress",
@@ -124,6 +164,14 @@
                         globalObjects.fx.glTexture = globalObjects.fx.glCanvas.texture(source);
                         source.parentNode.insertBefore(globalObjects.fx.glCanvas, source);
                         source.style.display = 'none';
+
+                        jsGFwk.ResourceManager.sounds.music.audio.loop = true;
+                        jsGFwk.ResourceManager.sounds.music.audio.volume = 0.4;
+                        jsGFwk.ResourceManager.sounds.music.audio.play();
+
+                        redHit = new jsGFwk.Jukebox({volume: 0.6, channels: 5, source: jsGFwk.ResourceManager.sounds.hurt });
+                        greenHit = new jsGFwk.Jukebox({volume: 0.6, channels: 5, source: jsGFwk.ResourceManager.sounds.points });
+                        blueHit = new jsGFwk.Jukebox({volume: 0.6, channels: 5, source: jsGFwk.ResourceManager.sounds.health });
 
                         jsGFwk.Scenes.scenes.game.enable();
                         jsGFwk._gameObjects.progress.destroy();
