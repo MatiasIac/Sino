@@ -3,7 +3,13 @@
     var mapBuilder = function () {
     };
 
-    mapBuilder.prototype.getMap = function (map, f) {
+    mapBuilder.prototype.constants = {
+        BADDIE: "BADDIE",
+        GOODIE: "GOODIE",
+        SPECIAL: "SPECIAL"
+    }
+
+    mapBuilder.prototype.getMap = function (map, entityFoundCallback) {
         var width = map.width;
         var height = map.height;
         var x = 0;
@@ -17,17 +23,26 @@
         context.drawImage(map, 0, 0);
 
         var imgData = context.getImageData(0, 0, width, height);
+
+        var red;
+        var green;
+        var blue;
+        var alpha;
         for (var i=0; i < imgData.data.length; i += 4) {
+            red = imgData.data[i];
+            green = imgData.data[i + 1];
+            blue = imgData.data[i + 2];
+            alpha = imgData.data[i + 3];
 
             if (i % (width * 4) === 0) {
                 x = 0;
                 y++;
             }
-
             x++;
 
-            if (imgData.data[i] === 255) {
-                f(x - 1, y - 1);
+            if (red === 255) {
+                entityFoundCallback(x - 1, y - 1, "BADDIE");
+
             }
         }
     };

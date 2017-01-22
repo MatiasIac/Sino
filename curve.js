@@ -17,12 +17,13 @@ var Curve = {
   freqIncrement: 0.05,
   minFreq: 1,
   maxFreq: 8,
-  minAmp: -0.01,
+  minAmp: 0.03,
   maxAmp: 2,
   ampIncrement: 0.05,
   offset: 2,
   speed: 0.05,
   waveSpeed: 0.01,
+  radius: 10,
   init: function () {
 
   },
@@ -36,7 +37,7 @@ var Curve = {
     this.handleInput(delta);
 
   },
-  handleInput: function(delta) {
+  handleInput: function (delta) {
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.A]) {
       this.setFrequency(jsGFwk.Utils.clamp(this.freq + this.freqIncrement * this.freq, this.minFreq, this.maxFreq));
     }
@@ -72,7 +73,7 @@ var Curve = {
     }
   },
 
-  setFrequency: function(newFrequency) {
+  setFrequency: function (newFrequency) {
     var oldFreq = this.freq;
     var oldPhase = this.phase;
 
@@ -112,13 +113,20 @@ var Curve = {
     ctx.beginPath();
     //ctx.moveTo(x, y);
 
-    ctx.arc(x * this.unit, this.unit * y + this.xAxis, 10, 0, 2*Math.PI, false);
+    ctx.arc(x * this.unit, this.unit * y + this.xAxis, this.radius, 0, 2 * Math.PI, false);
     ctx.stroke();
     ctx.fill();
+    this.x = x;
+    this.y = y;
   },
   getHeight: function (x, t, freq, phase, amp) {
     return Math.sin((x + t) * freq + phase) * amp;
+  },
+  getShapeInfo: function () {
+    return {
+      x: this.x * this.unit,
+      y: this.y * this.unit + this.xAxis,
+      radius: this.radius
+    };
   }
-
-
 };

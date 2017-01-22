@@ -18,8 +18,8 @@
         <script language="Javascript" src="framework/jsGFwkUtils.js"></script>
         <script language="Javascript" src="framework/jsGFwkTimers.js"></script>
         <script language="Javascript" src="curve.js"></script>
-        <script language="Javascript" src="enemy.js"></script>
-        <script language="Javascript" src="enemyController.js"></script>
+        <script language="Javascript" src="block.js"></script>
+        <script language="Javascript" src="levelController.js"></script>
         <script language="Javascript" src="mapBuilder.js"></script>
         <script language="Javascript" src="foreground.js"></script>
         <script language="Javascript" src="background.js"></script>
@@ -62,14 +62,14 @@
                 init: function() {
                     jsGFwk.ResourceManager.onResourcesLoadedCompleted = function() {
 
-                        globalObjects.enemiesContainer = jsGFwk.Container.createContainer('enemies', Enemy, true);
+                        globalObjects.blockContainer = jsGFwk.Container.createContainer('block', Block, true);
 
                         jsGFwk.Scenes.create({name: "game",
-                            gameObjects: [Background, 
+                            gameObjects: [Background,
                                           Curve,
-                                          EnemyController,
+                                          LevelController,
                                           Foreground,
-                                          globalObjects.enemiesContainer] });
+                                          globalObjects.blockContainer] });
 
                         jsGFwk.Scenes.scenes.game.enable();
                         jsGFwk._gameObjects.progress.destroy();
