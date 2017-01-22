@@ -47,7 +47,7 @@
             jsGFwk.Fonts.createFont({ name: 'zxBold', source: 'fonts/zxBold.ttf' });
             jsGFwk.Fonts.createFont({ name: 'open24display', source: 'fonts/open24display.ttf' });
 
-            var globalObjects = { 
+            var globalObjects = {
                 fx: {
                     glCanvas: null,
                     glTexture: null
@@ -92,7 +92,7 @@
 
                         jsGFwk.Sprites.createSpriteCollection("enemy",
                             jsGFwk.ResourceManager.graphics.redball.image,
-                                jsGFwk.Utils.makeAtlas(40, 40, 12, false));
+                                jsGFwk.Utils.makeDoubleAtlas(40, 40, 12, false));
                         jsGFwk.Sprites.enemy.loop(true);
 
                         jsGFwk.Sprites.createSpriteCollection("blue",
@@ -102,7 +102,7 @@
 
                         jsGFwk.Sprites.createSpriteCollection("green",
                             jsGFwk.ResourceManager.graphics.greenball.image,
-                                jsGFwk.Utils.makeAtlas(40, 40, 12, false));
+                                jsGFwk.Utils.makeDoubleAtlas(40, 40, 12, false));
                         jsGFwk.Sprites.green.loop(true);
 
                         globalObjects.blockContainer = jsGFwk.Container.createContainer('block', Block, true);
