@@ -48,10 +48,11 @@ var Curve = {
   radius: 10,
   init: function () {
     this.state = this.states.running;
-    this.freq = 3,
-    this.amp = 1,
-    this.phase = 4,
-    this.offset = 2
+    this.freq = 3;
+    this.amp = 1;
+    this.phase = 4;
+    this.offset = 2;
+    this.drawCircleParticles = false;
 
     jsGFwk.Sprites.player.reset();
     jsGFwk.Sprites.playerDead.reset();
@@ -109,6 +110,8 @@ var Curve = {
       this.offset += this.speed - this.waveSpeed;
     }
 
+    this.drawCircleParticles = jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.I] || jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.K];
+
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.SPACEBAR]) {
       this.waveSpeed = 0.04;
       LevelController.gameStatus.score += 1;
@@ -127,8 +130,14 @@ var Curve = {
     this.phase = (this.t + this.offset) * (oldFreq - this.freq) + oldPhase;
   },
   draw: function (ctx) {
+
+    var grad= ctx.createLinearGradient(0, 0, 640, 480);
+    grad.addColorStop(0, "transparent");
+    grad.addColorStop(0.5, "#0CD906");
+    grad.addColorStop(1, "#00FF00");
+    ctx.strokeStyle = grad;
+
     ctx.fillStyle = "#50FA4B";
-    ctx.strokeStyle = "#50FA4B";
     ctx.lineWidth = 3;
 
     var x = 0;
@@ -155,6 +164,17 @@ var Curve = {
     }
 
     ctx.drawImage(jsGFwk.Sprites.player.sprite.image, (x * this.unit) - 20, (this.unit * y + this.xAxis) - 20);
+
+    if (this.drawCircleParticles) {
+      for(var i = 0; i < 5; i++) {
+        globalObjects.particleContainer.cloneObject({
+          x: (x * this.unit),
+          y: (this.unit * y + this.xAxis),
+          particleColor: { r: 0, g: 255, b: 0 }
+        });
+      }
+    }
+
     this.x = x;
     this.y = y;
   },
