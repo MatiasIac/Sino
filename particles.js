@@ -8,7 +8,7 @@ var Particle = {
                                 (Math.random() * 640) - parameters.x);
         this.gama = 1;
         this.gamaAcc = 0;
-        this.particleColor = parameters.color || 100;
+        this.particleColor = parameters.particleColor || { r: 100, g: 100, b: 100 };
     },
     onUpdate: function (delta) {
         this.x += this.speed * Math.cos(this.angle);
@@ -29,7 +29,7 @@ var Particle = {
     onDraw: function (context) {
         context.beginPath();
         context.arc(this.x, this.y, 1, 0, 2 * Math.PI, false);
-        context.fillStyle = 'rgba(0, ' + this.particleColor + ', 0,' + this.gama + ')';
+        context.fillStyle = 'rgba(' + this.particleColor.r + ', ' + this.particleColor.g + ', ' + this.particleColor.b + ',' + this.gama + ')';
         context.fill();
         context.closePath();
     }

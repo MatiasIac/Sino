@@ -5,6 +5,15 @@
       case MapBuilder.constants.GOODIE:
         return {
           onPlayerTouch: function () {
+
+            for(var i = 0; i < 25; i++) {
+                globalObjects.particleContainer.cloneObject({ 
+                  x: this.position.x, 
+                  y: this.position.y,
+                  particleColor: { r: 0, g: 255, b: 0 }
+                });
+            }
+
             LevelController.gameStatus.score += 100;
             this.destroy();
           },
@@ -16,8 +25,12 @@
         return {
           onPlayerTouch: function () {
 
-            for(var i = 0; i < 15; i++) {
-                globalObjects.particleContainer.cloneObject({x: this.position.x - 20, y: this.position.y - 20});
+            for(var i = 0; i < 25; i++) {
+                globalObjects.particleContainer.cloneObject({ 
+                  x: this.position.x, 
+                  y: this.position.y,
+                  particleColor: { r: 255, g: 0, b: 0 }
+                });
             }
 
             this.destroy();
@@ -30,6 +43,15 @@
       case MapBuilder.constants.SPECIAL:
         return {
           onPlayerTouch: function () {
+
+            for(var i = 0; i < 25; i++) {
+                globalObjects.particleContainer.cloneObject({ 
+                  x: this.position.x, 
+                  y: this.position.y,
+                  particleColor: { r: 0, g: 0, b: 255 }
+                });
+            }
+
             LevelController.gameStatus.health += 1;
             LevelController.gameStatus.score += 500;
             this.destroy();
