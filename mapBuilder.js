@@ -19,7 +19,7 @@
         var imgData = context.getImageData(0, 0, width, height);
         for (var i=0; i < imgData.data.length; i += 4) {
 
-            if (i % width === 0) {
+            if (i % (width * 4) === 0) {
                 x = 0;
                 y++;
             }

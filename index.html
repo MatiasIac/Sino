@@ -20,6 +20,7 @@
         <script language="Javascript" src="curve.js"></script>
         <script language="Javascript" src="enemy.js"></script>
         <script language="Javascript" src="enemyController.js"></script>
+        <script language="Javascript" src="mapBuilder.js"></script>
         <script>
 
             jsGFwk.settings.canvas = "canvas";
@@ -48,6 +49,7 @@
             splash.src = "images/intro.png";
 
             jsGFwk.ResourceManager.addGraphic({ name: "intro", source: "images/intro.png" });
+            jsGFwk.ResourceManager.addGraphic({ name: "map1", source: "images/map1.png" });
 
             jsGFwk.createObject({
                 id: "progress",

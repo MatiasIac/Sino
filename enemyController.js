@@ -18,8 +18,21 @@ var EnemyController = {
       },
       tickTime: 2
     });
+
+    MapBuilder.getMap(jsGFwk.ResourceManager.graphics.map1.image, function(x, y) {
+      globalObjects.enemiesContainer.cloneObject({
+          position: {
+            x: x * 20,
+            y: y * 20
+          },
+          size: {
+            width: 20,
+            height: 20
+          }
+        });
+    });
   },
   update: function (delta) {
-    this.enemyTimer.tick(delta);
+    //this.enemyTimer.tick(delta);
   }
 };

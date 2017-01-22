@@ -6,8 +6,7 @@ var Enemy = {
     },
     onUpdate: function (delta) {
         this.position.x += this.speed;
-        if (this.position.x > jsGFwk.settings.width + 500 ||
-            this.position.x + this.size.width < 0) {
+        if (this.position.x + this.size.width < 0) {
             this.destroy();
             console.log("Destroy");
         }
