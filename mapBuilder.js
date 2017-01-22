@@ -40,9 +40,17 @@
             }
             x++;
 
+            var specialization = null;
             if (red === 255) {
-                entityFoundCallback(x - 1, y - 1, "BADDIE");
+                specialization = this.constants.BADDIE;
+            } else if (green === 255) {
+                specialization = this.constants.GOODIE;
+            } else if (blue === 255) {
+                specialization = this.constants.SPECIAL
+            }
 
+            if (specialization) {
+                entityFoundCallback(x - 1, y - 1, specialization);
             }
         }
     };

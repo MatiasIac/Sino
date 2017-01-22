@@ -2,7 +2,29 @@
 'use strict';
 
 var Curve = {
+  states: {
+    running: {
+      playerActive: true,
+      update: function (delta) {
+        // if (this.freqIncrement < 0 && this.freq < 1 || this.freqIncrement > 0 && this.freq > 20) {
+        //   this.freqIncrement = -this.freqIncrement;
+        // }
+        //this.setFrequency(this.freq + this.freqIncrement);
+        this.t = (this.t + this.waveSpeed);
+
+        this.handleInput(delta);
+
+      }
+    },
+    playerActive: false,
+    gameOver: {
+      update: function (delta) {
+        this.t = (this.t + this.waveSpeed);
+      }
+    }
+  },
   step: (Math.PI * 2) / 360,
+
   freq: 3,
   amp: 1,
   phase: 4,
@@ -25,16 +47,18 @@ var Curve = {
   waveSpeed: 0.01,
   radius: 10,
   init: function () {
-
+    this.state = this.states.running;
+    this.freq = 3,
+    this.amp = 1,
+    this.phase = 4,
+    this.offset = 2
   },
   update: function (delta) {
     // if (this.freqIncrement < 0 && this.freq < 1 || this.freqIncrement > 0 && this.freq > 20) {
     //   this.freqIncrement = -this.freqIncrement;
     // }
     //this.setFrequency(this.freq + this.freqIncrement);
-    this.t = (this.t + this.waveSpeed);
-
-    this.handleInput(delta);
+    this.state.update.call(this, delta);
 
   },
   handleInput: function (delta) {
@@ -71,6 +95,8 @@ var Curve = {
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.I]) {
       this.offset += this.speed - this.waveSpeed;
     }
+
+    this.offset = jsGFwk.Utils.clamp(this.offset, 0.15, 6.15);
   },
 
   setFrequency: function (newFrequency) {
@@ -100,13 +126,11 @@ var Curve = {
     ctx.stroke();
 
     this.drawCircle(ctx);
-
-    ctx.fillStyle = "black";
-    ctx.font = "10pt arial";
-    ctx.fillText("Freq: " + this.freq + ", Amp: " + this.amp + ", Offset: " + this.offset + ", T: " + this.t, 10, 20);
-
   },
   drawCircle: function (ctx) {
+    if (!this.state.playerActive) {
+      return;
+    }
     var x = this.offset;
     var y = this.getHeight(x, this.t, this.freq, this.phase, this.amp);
     //var y = Math.sin(this.t + this.offset * this.freq + this.phase) * this.amp * this.unit;

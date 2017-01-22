@@ -20,7 +20,7 @@ var LevelController = {
     });
 
 
-    var leftMostBlock = null;
+    var rightMostBlock = null;
     var maxX = 0;
     MapBuilder.getMap(jsGFwk.ResourceManager.graphics.map1.image, function (x, y) {
       var blockSize = 20;
@@ -34,8 +34,8 @@ var LevelController = {
           height: blockSize
         }
       });
-      if (!leftMostBlock || block.position.x > maxX) {
-        leftMostBlock = block;
+      if (!rightMostBlock || block.position.x > maxX) {
+        rightMostBlock = block;
       }
     });
   },
