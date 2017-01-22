@@ -17,7 +17,7 @@ var Curve = {
   freqIncrement: 0.05,
   minFreq: 1,
   maxFreq: 8,
-  minAmp: -2,
+  minAmp: -0.01,
   maxAmp: 2,
   ampIncrement: 0.05,
   offset: 2,
@@ -38,11 +38,11 @@ var Curve = {
   },
   handleInput: function(delta) {
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.A]) {
-      this.setFrequency(jsGFwk.Utils.clamp(this.freq + this.freqIncrement, this.minFreq, this.maxFreq));
+      this.setFrequency(jsGFwk.Utils.clamp(this.freq + this.freqIncrement * this.freq, this.minFreq, this.maxFreq));
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.D]) {
-      this.setFrequency(jsGFwk.Utils.clamp(this.freq - this.freqIncrement, this.minFreq, this.maxFreq));
+      this.setFrequency(jsGFwk.Utils.clamp(this.freq - this.freqIncrement * this.freq, this.minFreq, this.maxFreq));
     }
 
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.W]) {
