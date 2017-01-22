@@ -21,10 +21,12 @@
         <script language="Javascript" src="enemy.js"></script>
         <script language="Javascript" src="enemyController.js"></script>
         <script language="Javascript" src="mapBuilder.js"></script>
+        <script language="Javascript" src="foreground.js"></script>
+        <script language="Javascript" src="background.js"></script>
         <script>
 
             jsGFwk.settings.canvas = "canvas";
-            jsGFwk.settings.clearColor = "#5C94FC";
+            jsGFwk.settings.clearColor = "black";
             jsGFwk.settings.frameRate = 1000 / 60;
 
             jsGFwk.include("FastAnimation");
@@ -50,6 +52,8 @@
 
             jsGFwk.ResourceManager.addGraphic({ name: "intro", source: "images/intro.png" });
             jsGFwk.ResourceManager.addGraphic({ name: "map1", source: "images/map1.png" });
+            jsGFwk.ResourceManager.addGraphic({ name: "foreground", source: "images/foreground.png" });
+            jsGFwk.ResourceManager.addGraphic({ name: "background", source: "images/background.png" });
 
             jsGFwk.createObject({
                 id: "progress",
@@ -61,7 +65,11 @@
                         globalObjects.enemiesContainer = jsGFwk.Container.createContainer('enemies', Enemy, true);
 
                         jsGFwk.Scenes.create({name: "game",
-                            gameObjects: [globalObjects.enemiesContainer, Curve, EnemyController] });
+                            gameObjects: [Background, 
+                                          Curve,
+                                          EnemyController,
+                                          Foreground,
+                                          globalObjects.enemiesContainer] });
 
                         jsGFwk.Scenes.scenes.game.enable();
                         jsGFwk._gameObjects.progress.destroy();

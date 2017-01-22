@@ -8,11 +8,10 @@ var Enemy = {
         this.position.x += this.speed;
         if (this.position.x + this.size.width < 0) {
             this.destroy();
-            console.log("Destroy");
         }
     },
     onDraw: function (ctx) {
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "green";
         ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
 };

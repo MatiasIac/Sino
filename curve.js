@@ -80,6 +80,10 @@ var Curve = {
     this.phase = (this.t + this.offset) * (oldFreq - this.freq) + oldPhase;
   },
   draw: function (ctx) {
+    ctx.fillStyle = "#50FA4B";
+    ctx.strokeStyle = "#50FA4B";
+    ctx.lineWidth = 3;
+
     var x = 0;
     var y = this.getHeight(x, this.t, this.freq, this.phase, this.amp);
 
@@ -110,6 +114,7 @@ var Curve = {
 
     ctx.arc(x * this.unit, this.unit * y + this.xAxis, 10, 0, 2*Math.PI, false);
     ctx.stroke();
+    ctx.fill();
   },
   getHeight: function (x, t, freq, phase, amp) {
     return Math.sin((x + t) * freq + phase) * amp;
