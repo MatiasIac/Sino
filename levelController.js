@@ -3,7 +3,13 @@
 
   var LevelController = {
     loadNextLevel: function (xOffset) {
-      var levels = [jsGFwk.ResourceManager.graphics.map1.image, jsGFwk.ResourceManager.graphics.map2.image, jsGFwk.ResourceManager.graphics.map3.image, jsGFwk.ResourceManager.graphics.map4.image];
+      var levels = [
+        jsGFwk.ResourceManager.graphics.map1.image, 
+        jsGFwk.ResourceManager.graphics.map2.image,
+        jsGFwk.ResourceManager.graphics.map3.image,
+        jsGFwk.ResourceManager.graphics.map4.image
+      ];
+
       this.gameStatus.level++;
       var rightMostBlock = null;
       var maxX = 0;
@@ -12,8 +18,18 @@
         return;
       }
 
-      MapBuilder.getMap(levels[this.gameStatus.level - 1], function (x, y, specialization) {
+        var closureThis = this;
+        new Alarm(0, function () {
+          ScreenMessages.visible = true;
+          ScreenMessages.setMessage("Level " + closureThis.gameStatus.level, "white");
+          
+          new Alarm(2, function () {
+            ScreenMessages.visible = false;
+          });
 
+        });
+
+      MapBuilder.getMap(levels[this.gameStatus.level - 1], function (x, y, specialization) {
         var blockSize = 20;
         var block = globalObjects.blockContainer.cloneObject({
           position: {
@@ -30,9 +46,9 @@
         if (!rightMostBlock || block.position.x > maxX) {
           rightMostBlock = block;
           maxX = rightMostBlock.position.x;
-          console.log(rightMostBlock.position);
         }
       }.bind(this));
+
       rightMostBlock.checkShowing = function () {
         if (this.position.x < jsGFwk.settings.width) {
           this.checkShowing = null;
