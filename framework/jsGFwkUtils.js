@@ -18,5 +18,15 @@ jsGFwk.Utils = {
 	onLoadReady: function () {
 		jsGFwk.include(this._plugInName);
 		if (!this._loaded) { this._loaded = true; this.onStart(); }
+	},
+ 	makeAtlas: function(width, height, frames, inverted, offset) {
+		offset = offset || 0;
+		var spriteCollection = [];
+		var newFrame;
+		for (var i = 0; i < frames; i++) {
+			newFrame = {left: width * (i + offset), top: 0, width: width, height: height, inverted: inverted};
+			spriteCollection.push(newFrame);
+		}
+		return spriteCollection;
 	}
 }
