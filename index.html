@@ -1,4 +1,5 @@
 <html>
+    <!-- Game code developed by Matias Iacono, Patricio Marrone, with art from Carla Corcoba and Alejandro -->
     <body>
         <canvas id="canvas" width="640" height="480"></canvas>
 
@@ -96,7 +97,7 @@
 
                         jsGFwk.Sprites.createSpriteCollection("blue",
                             jsGFwk.ResourceManager.graphics.blueball.image,
-                                jsGFwk.Utils.makeAtlas(40, 40, 12, true).concat(jsGFwk.Utils.makeAtlas(40, 40, 12, false)));
+                                jsGFwk.Utils.makeDoubleAtlas(40, 40, 12, true));
                         jsGFwk.Sprites.blue.loop(true);
 
                         jsGFwk.Sprites.createSpriteCollection("green",
