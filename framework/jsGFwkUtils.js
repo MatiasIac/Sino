@@ -28,5 +28,19 @@ jsGFwk.Utils = {
 			spriteCollection.push(newFrame);
 		}
 		return spriteCollection;
+	},
+	makeDoubleAtlas: function(width, height, frames, inverted, offset) {
+		offset = offset || 0;
+		var spriteCollection = [];
+		var newFrame;
+		for (var i = 0; i < frames; i++) {
+			newFrame = {left: width * (i + offset), top: 0, width: width, height: height, inverted: inverted};
+			spriteCollection.push(newFrame);
+		}
+		for (i = frames - 1; i > 0; i--) {
+			newFrame = {left: width * (i + offset), top: 0, width: width, height: height, inverted: inverted};
+			spriteCollection.push(newFrame);
+		}
+		return spriteCollection;
 	}
-}
+};
