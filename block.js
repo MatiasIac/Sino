@@ -7,8 +7,8 @@
           onPlayerTouch: function () {
 
             for(var i = 0; i < 25; i++) {
-                globalObjects.particleContainer.cloneObject({ 
-                  x: this.position.x, 
+                globalObjects.particleContainer.cloneObject({
+                  x: this.position.x,
                   y: this.position.y,
                   particleColor: { r: 0, g: 255, b: 0 }
                 });
@@ -26,8 +26,8 @@
           onPlayerTouch: function () {
 
             for(var i = 0; i < 25; i++) {
-                globalObjects.particleContainer.cloneObject({ 
-                  x: this.position.x, 
+                globalObjects.particleContainer.cloneObject({
+                  x: this.position.x,
                   y: this.position.y,
                   particleColor: { r: 255, g: 0, b: 0 }
                 });
@@ -45,8 +45,8 @@
           onPlayerTouch: function () {
 
             for(var i = 0; i < 25; i++) {
-                globalObjects.particleContainer.cloneObject({ 
-                  x: this.position.x, 
+                globalObjects.particleContainer.cloneObject({
+                  x: this.position.x,
                   y: this.position.y,
                   particleColor: { r: 0, g: 0, b: 255 }
                 });
@@ -67,12 +67,11 @@
     onInit: function (parameters) {
       this.position = parameters.position;
       this.size = parameters.size;
-      this.speed = parameters.speed || -Curve.waveSpeed * Curve.unit;
       this.radius = this.size.width / 2;
       this.specialization = selectSpecialization(parameters.specialization);
     },
     onUpdate: function (delta) {
-      this.position.x += this.speed;
+      this.position.x +=  -Curve.waveSpeed * Curve.unit;
       if (this.position.x + this.size.width < 0) {
         this.destroy();
       }
