@@ -38,6 +38,8 @@ jsGFwk.Sprites = {
 	            if (self.seeker < self.spriteBag.length) {	
 	                self.seeker++;
 	            }
+
+				self.seeker = Math.min(self.seeker, self.spriteBag.length - 1);
 	        };
 
 	        this._moveFrame = function() {};

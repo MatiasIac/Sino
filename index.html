@@ -58,10 +58,11 @@
             jsGFwk.ResourceManager.addGraphic({ name: "map4", source: "images/map4.png" });
             jsGFwk.ResourceManager.addGraphic({ name: "foreground", source: "images/foreground.png" });
             jsGFwk.ResourceManager.addGraphic({ name: "background", source: "images/background.png" });
-            jsGFwk.ResourceManager.addGraphic({	name: "ball", source: "ball/ball.png" });
-            jsGFwk.ResourceManager.addGraphic({	name: "ball-die", source: "ball/ball-die.png" });
-            jsGFwk.ResourceManager.addGraphic({	name: "blueball", source: "ball/blueball.png" });
-            jsGFwk.ResourceManager.addGraphic({	name: "redball", source: "ball/redball.png" });
+            jsGFwk.ResourceManager.addGraphic({	name: "ball", source: "images/ball.png" });
+            jsGFwk.ResourceManager.addGraphic({	name: "balldie", source: "images/ball-die.png" });
+            jsGFwk.ResourceManager.addGraphic({	name: "blueball", source: "images/blueball.png" });
+            jsGFwk.ResourceManager.addGraphic({	name: "redball", source: "images/redball.png" });
+            jsGFwk.ResourceManager.addGraphic({	name: "greenball", source: "images/greenball.png" });
 
             jsGFwk.createObject({
                 id: "progress",
@@ -70,21 +71,39 @@
                 init: function() {
                     jsGFwk.ResourceManager.onResourcesLoadedCompleted = function() {
 
-                        jsGFwk.Sprites.createSpriteCollection("button",
-                            jsGFwk.ResourceManager.graphics.button.image,
-                                [{left: 64, top: 6, width: 60, height: 49},
-                                {left: 1, top: 6, width: 60, height: 49}]);
-                        var playerSpritesAtlas = util.makeAtlas(127, 261, 8, false);
-                        var mirroredPlayerSpritesAtlas = util.makeAtlas(127, 261, 8, true);
+                        jsGFwk.Sprites.createSpriteCollection("player",
+                            jsGFwk.ResourceManager.graphics.ball.image,
+                                jsGFwk.Utils.makeAtlas(40, 40, 24, false));
+                        jsGFwk.Sprites.player.loop(true);
+
+                        jsGFwk.Sprites.createSpriteCollection("playerDead",
+                            jsGFwk.ResourceManager.graphics.balldie.image,
+                                jsGFwk.Utils.makeAtlas(40, 40, 11, false));
+
+                        jsGFwk.Sprites.createSpriteCollection("enemy",
+                            jsGFwk.ResourceManager.graphics.redball.image,
+                                jsGFwk.Utils.makeAtlas(40, 40, 12, false));
+                        jsGFwk.Sprites.enemy.loop(true);
+
+                        jsGFwk.Sprites.createSpriteCollection("blue",
+                            jsGFwk.ResourceManager.graphics.blueball.image,
+                                jsGFwk.Utils.makeAtlas(40, 40, 12, true).concat(jsGFwk.Utils.makeAtlas(40, 40, 12, false)));
+                        jsGFwk.Sprites.blue.loop(true);
+
+                        jsGFwk.Sprites.createSpriteCollection("green",
+                            jsGFwk.ResourceManager.graphics.greenball.image,
+                                jsGFwk.Utils.makeAtlas(40, 40, 12, false));
+                        jsGFwk.Sprites.green.loop(true);
 
                         globalObjects.blockContainer = jsGFwk.Container.createContainer('block', Block, true);
 
                         jsGFwk.Scenes.create({name: "game",
                             gameObjects: [Background,
+                                          globalObjects.blockContainer,
                                           Curve,
                                           LevelController,
-                                          Foreground,
-                                          globalObjects.blockContainer] });
+                                          //Foreground,
+                                          ]});
 
                         jsGFwk.Scenes.scenes.game.enable();
                         jsGFwk._gameObjects.progress.destroy();

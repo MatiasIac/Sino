@@ -62,31 +62,36 @@
       }
     },
     id: "levelController",
-    visible: false,
+    visible: true,
     init: function () {
-      var time = 10;
-      this.enemyTimer = new jsGFwk.Timer({
+
+      jsGFwk.Sprites.enemy.reset();
+      jsGFwk.Sprites.blue.reset();
+      jsGFwk.Sprites.green.reset();
+
+      this.objectsTimer = new jsGFwk.Timer({
         action: function () {
-          globalObjects.blockContainer.cloneObject({
-            position: {
-              x: Math.random() * 10 + jsGFwk.settings.width + 10 + 50,
-              y: Math.random() * 500 + 20
-            },
-            size: {
-              width: 50,
-              height: 50
-            }
-          });
+          jsGFwk.Sprites.enemy.next();
+          jsGFwk.Sprites.blue.next();
+          jsGFwk.Sprites.green.next();
         },
-        tickTime: 2
+        tickTime: 0.08
       });
+
+      this.otherBallTime = new jsGFwk.Timer({
+        action: function () {
+          jsGFwk.Sprites.enemy.next();
+          jsGFwk.Sprites.blue.next();
+        },
+        tickTime: 0.05
+      });
+
       this.gameStatus = this.resetGameStatus();
       this.loadNextLevel();
-
-
     },
     update: function (delta) {
-      //this.enemyTimer.tick(delta);
+      this.otherBallTime.tick(delta);
+      this.objectsTimer.tick(delta);
     }
   };
   window.LevelController = LevelController;

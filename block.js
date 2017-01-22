@@ -8,7 +8,8 @@
             LevelController.gameStatus.score += 100;
             this.destroy();
           },
-          color: "green"
+          color: "green",
+          sprite: jsGFwk.Sprites.green
         }
         break;
       case MapBuilder.constants.BADDIE:
@@ -18,7 +19,8 @@
             this.destroy();
             LevelController.damagePlayer();
           },
-          color: "red"
+          color: "red",
+          sprite: jsGFwk.Sprites.enemy
         }
         break;
       case MapBuilder.constants.SPECIAL:
@@ -28,12 +30,12 @@
             LevelController.gameStatus.score += 500;
             this.destroy();
           },
-          color: "blue"
+          color: "blue",
+          sprite: jsGFwk.Sprites.blue
         }
         break;
     };
   }
-
 
   var Block = {
     onInit: function (parameters) {
@@ -54,16 +56,7 @@
       }
     },
     onDraw: function (ctx) {
-      ctx.fillStyle = this.specialization.color;
-      ctx.strokeStyle = "transparent";
-      ctx.beginPath();
-      //ctx.moveTo(x, y);
-
-      ctx.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI, false);
-      ctx.stroke();
-      ctx.fill();
-
-      //ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+      ctx.drawImage(this.specialization.sprite.sprite.image, this.position.x - 20, this.position.y - 20);
     },
     checkForCollision: function () {
       if (this.position.x < jsGFwk.settings.width) {

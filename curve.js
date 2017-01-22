@@ -11,15 +11,15 @@ var Curve = {
         // }
         //this.setFrequency(this.freq + this.freqIncrement);
         this.t = (this.t + this.waveSpeed);
-
         this.handleInput(delta);
-
+        this.animTime.tick(delta);
       }
     },
     playerActive: false,
     gameOver: {
       update: function (delta) {
         this.t = (this.t + this.waveSpeed);
+        this.deadTime.tick(delta);
       }
     }
   },
@@ -52,14 +52,27 @@ var Curve = {
     this.amp = 1,
     this.phase = 4,
     this.offset = 2
+
+    jsGFwk.Sprites.player.reset();
+    jsGFwk.Sprites.playerDead.reset();
+
+    this.animTime = new jsGFwk.Timer({
+      action: function () {
+        jsGFwk.Sprites.player.next();
+      },
+      tickTime: 0.08
+    });
+
+    this.deadTime = new jsGFwk.Timer({
+      action: function () {
+        jsGFwk.Sprites.playerDead.next();
+      },
+      tickTime: 0.05
+    });
+
   },
   update: function (delta) {
-    // if (this.freqIncrement < 0 && this.freq < 1 || this.freqIncrement > 0 && this.freq > 20) {
-    //   this.freqIncrement = -this.freqIncrement;
-    // }
-    //this.setFrequency(this.freq + this.freqIncrement);
     this.state.update.call(this, delta);
-
   },
   handleInput: function (delta) {
     if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.A]) {
@@ -114,10 +127,8 @@ var Curve = {
     var x = 0;
     var y = this.getHeight(x, this.t, this.freq, this.phase, this.amp);
 
-
     ctx.beginPath();
     ctx.moveTo(x * this.unit, this.unit * y + this.xAxis);
-    // Loop to draw segments
 
     for (x = 0; x <= this.width; x += this.step) {
       y = this.getHeight(x, this.t, this.freq, this.phase, this.amp);
@@ -128,18 +139,15 @@ var Curve = {
     this.drawCircle(ctx);
   },
   drawCircle: function (ctx) {
-    if (!this.state.playerActive) {
-      return;
-    }
     var x = this.offset;
     var y = this.getHeight(x, this.t, this.freq, this.phase, this.amp);
-    //var y = Math.sin(this.t + this.offset * this.freq + this.phase) * this.amp * this.unit;
-    ctx.beginPath();
-    //ctx.moveTo(x, y);
-
-    ctx.arc(x * this.unit, this.unit * y + this.xAxis, this.radius, 0, 2 * Math.PI, false);
-    ctx.stroke();
-    ctx.fill();
+    
+    if (!this.state.playerActive) {
+      ctx.drawImage(jsGFwk.Sprites.playerDead.sprite.image, (x * this.unit) - 20, (this.unit * y + this.xAxis) - 20);
+      return;
+    }
+    
+    ctx.drawImage(jsGFwk.Sprites.player.sprite.image, (x * this.unit) - 20, (this.unit * y + this.xAxis) - 20);
     this.x = x;
     this.y = y;
   },
