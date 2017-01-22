@@ -70,6 +70,13 @@
                 init: function() {
                     jsGFwk.ResourceManager.onResourcesLoadedCompleted = function() {
 
+                        jsGFwk.Sprites.createSpriteCollection("button",
+                            jsGFwk.ResourceManager.graphics.button.image,
+                                [{left: 64, top: 6, width: 60, height: 49},
+                                {left: 1, top: 6, width: 60, height: 49}]);
+                        var playerSpritesAtlas = util.makeAtlas(127, 261, 8, false);
+                        var mirroredPlayerSpritesAtlas = util.makeAtlas(127, 261, 8, true);
+
                         globalObjects.blockContainer = jsGFwk.Container.createContainer('block', Block, true);
 
                         jsGFwk.Scenes.create({name: "game",
