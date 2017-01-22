@@ -109,6 +109,13 @@ var Curve = {
       this.offset += this.speed - this.waveSpeed;
     }
 
+    if (jsGFwk.IO.keyboard.getActiveKeys()[jsGFwk.IO.keyboard.key.SPACEBAR]) {
+      this.waveSpeed = 0.04;
+      LevelController.gameStatus.score += 1;
+    } else {
+      this.waveSpeed = 0.01;
+    }
+
     this.offset = jsGFwk.Utils.clamp(this.offset, 0.15, 6.15);
   },
 
@@ -141,12 +148,12 @@ var Curve = {
   drawCircle: function (ctx) {
     var x = this.offset;
     var y = this.getHeight(x, this.t, this.freq, this.phase, this.amp);
-    
+
     if (!this.state.playerActive) {
       ctx.drawImage(jsGFwk.Sprites.playerDead.sprite.image, (x * this.unit) - 20, (this.unit * y + this.xAxis) - 20);
       return;
     }
-    
+
     ctx.drawImage(jsGFwk.Sprites.player.sprite.image, (x * this.unit) - 20, (this.unit * y + this.xAxis) - 20);
     this.x = x;
     this.y = y;
