@@ -24,6 +24,7 @@
         <script language="Javascript" src="mapBuilder.js"></script>
         <script language="Javascript" src="foreground.js"></script>
         <script language="Javascript" src="background.js"></script>
+        <script language="Javascript" src="particles.js"></script>
         <script>
 
             jsGFwk.settings.canvas = "canvas";
@@ -96,10 +97,12 @@
                         jsGFwk.Sprites.green.loop(true);
 
                         globalObjects.blockContainer = jsGFwk.Container.createContainer('block', Block, true);
+                        globalObjects.particleContainer = jsGFwk.Container.createContainer('particle', Particle, true);
 
                         jsGFwk.Scenes.create({name: "game",
                             gameObjects: [Background,
                                           globalObjects.blockContainer,
+                                          globalObjects.particleContainer,
                                           Curve,
                                           LevelController,
                                           //Foreground,

@@ -16,6 +16,10 @@
         return {
           onPlayerTouch: function () {
 
+            for(var i = 0; i < 15; i++) {
+                globalObjects.particleContainer.cloneObject({x: this.position.x - 20, y: this.position.y - 20});
+            }
+
             this.destroy();
             LevelController.damagePlayer();
           },
